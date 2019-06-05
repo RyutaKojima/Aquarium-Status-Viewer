@@ -1,0 +1,22 @@
+{
+  "name": "aquarium-status-viewer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RyutaKojima/Aquarium-Status-Viewer.git"
+  },
+  "author": "r.kojima",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RyutaKojima/Aquarium-Status-Viewer/issues"
+  },
+  "homepage": "https://github.com/RyutaKojima/Aquarium-Status-Viewer#readme",
+  "dependencies": {
+    "firebase": "^6.1.0"
+  }
+}
