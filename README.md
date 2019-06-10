@@ -11,12 +11,20 @@ $ npm install -g firebase-tools
 $ firebase login
 ```
 
-ローカル ウェブサーバー起動（for ローカルテスト）
+
+# ビルド～テスト
+
 ```
+# Build
+webpack
+
+
+# ローカル ウェブサーバー起動（for ローカルテスト）
 $ firebase serve
 ```
 
-firebaseにデプロイ
+# firebaseにデプロイ
+
 ```sh
 firebase deploy --only hosting
 ```
