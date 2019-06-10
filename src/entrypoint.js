@@ -29,7 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 読み込み
     db.collection("water_tank_condition").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-            console.log(`${doc.id} => ${doc.data()}`);
+            const documentId = doc.id
+            const fields = doc.data();
+            console.log(`${documentId} => ${fields}`);
+            console.log(fields);
         });
     });
 
