@@ -27,13 +27,33 @@ document.addEventListener('DOMContentLoaded', () => {
     //     });
 
     // 読み込み
-    db.collection("water_tank_condition").get().then((querySnapshot) => {
+    let parameters = [];
+    const conditionRef = db.collection("water_tank_condition");
+    conditionRef
+        .where('date', '>=', '2019-06-01')
+        .where('date', '<=', '2019-06-30')
+        .get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-            const documentId = doc.id
+            const documentId = doc.id;
             const fields = doc.data();
+
             console.log(`${documentId} => ${fields}`);
             console.log(fields);
+
+            parameters.push({
+                date: documentId,
+                water: fields.water_temperature,
+                temperature: fields.temperature,
+                humidity: '???',
+            });
         });
     });
 
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            parameters: parameters,
+        }
+    });
 });

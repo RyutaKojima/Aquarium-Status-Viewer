@@ -16,10 +16,27 @@
     <!-- initialize the SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
     <script defer src="js/bundle.js"></script>
 
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <table>
+        <thead>
+          <th>日にち</th>
+          <th>水温</th>
+          <th>気温</th>
+          <th>湿度</th>
+        </thead>
+        <tbody v-for="parameter of parameters">
+        <td>{{parameter.date}}</td>
+        <td>{{parameter.water}}</td>
+        <td>{{parameter.temperature}}</td>
+        <td>{{parameter.humidity}}</td>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>
