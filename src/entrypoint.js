@@ -1,4 +1,9 @@
+import Vue from 'vue'
 const moment = require('moment');
+
+import datePickerComponent from './datePickerComponent'
+
+Vue.config.devtools = true;
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -41,25 +46,25 @@ document.addEventListener('DOMContentLoaded', () => {
     while (forDetectChange === formatForDetectChange(fetchDate)) {
         console.log(fetchDate.format('YYYY-MM-DDTHH:mm'));
 
-        conditionRef
-            .doc(fetchDate.format('YYYY-MM-DDTHH:mm'))
-            // .where('date', '==', fetchDate.format('YYYY-MM-DD'))
-            // .where('time', '==', fetchDate.format('HH:mm'))
-            .get().then((doc) => {
-                const documentId = doc.id;
-                const fields = doc.exists ? doc.data() : {};
-                const nowDate = moment(documentId);
-
-                // console.log(`${documentId} => ${fields}`);
-                // console.log(fields);
-
-                parameters.push({
-                    date: nowDate.format('YYYY-MM-DD HH:mm'),
-                    water: fields.hasOwnProperty('water_temperature') ? fields.water_temperature : 0,
-                    temperature: fields.hasOwnProperty('temperature') ? fields.temperature : 0,
-                    humidity: 0,
-                });
-            });
+        // conditionRef
+        //     .doc(fetchDate.format('YYYY-MM-DDTHH:mm'))
+        //     // .where('date', '==', fetchDate.format('YYYY-MM-DD'))
+        //     // .where('time', '==', fetchDate.format('HH:mm'))
+        //     .get().then((doc) => {
+        //         const documentId = doc.id;
+        //         const fields = doc.exists ? doc.data() : {};
+        //         const nowDate = moment(documentId);
+        //
+        //         // console.log(`${documentId} => ${fields}`);
+        //         // console.log(fields);
+        //
+        //         parameters.push({
+        //             date: nowDate.format('YYYY-MM-DD HH:mm'),
+        //             water: fields.hasOwnProperty('water_temperature') ? fields.water_temperature : 0,
+        //             temperature: fields.hasOwnProperty('temperature') ? fields.temperature : 0,
+        //             humidity: 0,
+        //         });
+        //     });
 
         // 次の時間に進める
         fetchDate.add(1, 'hour');
@@ -90,8 +95,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const app = new Vue({
         el: '#app',
         data: {
-            message: 'Hello Vue!',
             parameters: parameters,
+            fetchDate: fetchDate.format(),
+        },
+        components: {
+            datePickerComponent,
         }
     });
 });
