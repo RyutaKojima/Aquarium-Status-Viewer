@@ -1,5 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
+.firebase/
 node_modules/
 
 # distribution directory
