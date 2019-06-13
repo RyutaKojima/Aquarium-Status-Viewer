@@ -21,7 +21,7 @@
   </head>
   <body>
     <div id="app">
-      <date-picker-component :fetch-date="fetchDate"></date-picker-component>
+      <date-picker-component :fetch-date="fetchDate" @set-fetch-date="val => fetchDate = val"></date-picker-component>
       <table>
         <thead>
           <th>日にち</th>
