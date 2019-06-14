@@ -15,7 +15,8 @@
 			newFetchDate: {
 				set(value){
 					if (value === this.fetchDate) return;
-					this.$emit('update:fetchDate', value);
+					this.$emit('set-fetch-date', value);
+					// this.$emit('update:fetchDate', value);
 				},
 				get() {
 					return this.fetchDate;
