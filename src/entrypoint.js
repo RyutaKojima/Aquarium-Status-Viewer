@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             chartData : {},
             chartOptions: {
                 responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     yAxes: [
                         {
