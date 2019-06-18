@@ -18,9 +18,11 @@
   "homepage": "https://github.com/RyutaKojima/Aquarium-Status-Viewer#readme",
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
+    "chart.js": "^2.8.0",
     "firebase": "^6.1.0",
     "moment": "^2.24.0",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-chartjs": "^3.4.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",

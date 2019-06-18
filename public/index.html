@@ -15,13 +15,16 @@
     <script defer src="/__/firebase/6.1.0/firebase-firestore.js"></script>
     <!-- initialize the SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
-    
+
     <script defer src="js/bundle.js"></script>
 
   </head>
   <body>
     <div id="app">
       <date-picker-component :fetch-date.sync="fetchDate" v-on:set-fetch-date="setFetchDate"></date-picker-component>
+
+      <data-chart :chart-data="chartData" :options="chartOptions"></data-chart>
+      
       <table>
         <thead>
           <th>日にち</th>

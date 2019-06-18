@@ -1,7 +1,8 @@
 import Vue from 'vue'
-const moment = require('moment');
+import moment from 'moment';
 
 import datePickerComponent from './datePickerComponent'
+import dataChart from './dataChart'
 
 Vue.config.devtools = true;
 
@@ -42,87 +43,78 @@ document.addEventListener('DOMContentLoaded', () => {
     // const fetchDate = moment().startOf('month');
     const fetchDate = moment().startOf('week');
     const formatForDetectChange = momentObject => momentObject.format('YYYY-ww');
-    
-    const loadData = (originFetchDate) => {
-        const fetchDate = originFetchDate.clone();
-        parameters.length = 0;
-        
-        const forDetectChange = formatForDetectChange(fetchDate);
-        while (forDetectChange === formatForDetectChange(fetchDate)) {
-            console.log(fetchDate.format('YYYY-MM-DDTHH:mm'));
 
-            conditionRef
-                .doc(fetchDate.format('YYYY-MM-DDTHH:mm'))
-                // .where('date', '==', fetchDate.format('YYYY-MM-DD'))
-                // .where('time', '==', fetchDate.format('HH:mm'))
-                .get().then((doc) => {
-                const documentId = doc.id;
-                const fields = doc.exists ? doc.data() : {};
-                const nowDate = moment(documentId);
-
-                // console.log(`${documentId} => ${fields}`);
-                // console.log(fields);
-
-                parameters.push({
-                    date: nowDate.format('YYYY-MM-DD HH:mm'),
-                    water: fields.hasOwnProperty('water_temperature') ? fields.water_temperature : 0,
-                    temperature: fields.hasOwnProperty('temperature') ? fields.temperature : 0,
-                    humidity: 0,
-                });
-            });
-
-            // 次の時間に進める
-            fetchDate.add(1, 'hour');
-        }
-    };
-
-    loadData(fetchDate);
-
-    /*
-    const forDetectChange = formatForDetectChange(fetchDate);
-    while (forDetectChange === formatForDetectChange(fetchDate)) {
-        console.log(fetchDate.format('YYYY-MM-DDTHH:mm'));
-
-        // conditionRef
-        //     .doc(fetchDate.format('YYYY-MM-DDTHH:mm'))
-        //     // .where('date', '==', fetchDate.format('YYYY-MM-DD'))
-        //     // .where('time', '==', fetchDate.format('HH:mm'))
-        //     .get().then((doc) => {
-        //         const documentId = doc.id;
-        //         const fields = doc.exists ? doc.data() : {};
-        //         const nowDate = moment(documentId);
-        //
-        //         // console.log(`${documentId} => ${fields}`);
-        //         // console.log(fields);
-        //
-        //         parameters.push({
-        //             date: nowDate.format('YYYY-MM-DD HH:mm'),
-        //             water: fields.hasOwnProperty('water_temperature') ? fields.water_temperature : 0,
-        //             temperature: fields.hasOwnProperty('temperature') ? fields.temperature : 0,
-        //             humidity: 0,
-        //         });
-        //     });
-
-        // 次の時間に進める
-        fetchDate.add(1, 'hour');
-    }
-    console.log(fetchDate.format());
-    */
     const app = new Vue({
         el: '#app',
         data: {
             parameters: parameters,
             fetchDate: fetchDate.format(),
+            chartData : {},
+            chartOptions: {
+                responsive: true,
+            },
         },
         components: {
             datePickerComponent,
+            dataChart,
+        },
+        created: function() {
+            this.loadFireStore(fetchDate);
         },
         methods: {
-            setFetchDate: function(value) {
+            setFetchDate: function (value){
                 this.fetchDate = value;
-
-                loadData(moment(this.fetchDate));
+                this.loadFireStore(moment(this.fetchDate));
             },
-        }
+            loadFireStore: function (originFetchDate) {
+                const fetchDate = originFetchDate.clone();
+                const chartProtLabel = [];
+                const chartProtData = [];
+                this.parameters.length = 0;
+
+                const poromises = [];
+                const forDetectChange = formatForDetectChange(fetchDate);
+                while (forDetectChange === formatForDetectChange(fetchDate)) {
+                    const promise = conditionRef
+                        .doc(fetchDate.format('YYYY-MM-DDTHH:mm'))
+                        // .where('date', '==', fetchDate.format('YYYY-MM-DD'))
+                        // .where('time', '==', fetchDate.format('HH:mm'))
+                        .get().then((doc) => {
+                        const documentId = doc.id;
+                        const fields = doc.exists ? doc.data() : {};
+                        const nowDate = moment(documentId);
+                        
+                        const water_temperature = fields.hasOwnProperty('water_temperature') ? fields.water_temperature : 0;
+
+                        this.parameters.push({
+                            date: nowDate.format('YYYY-MM-DD HH:mm'),
+                            water: water_temperature,
+                            temperature: fields.hasOwnProperty('temperature') ? fields.temperature : 0,
+                            humidity: 0,
+                        });
+
+                        chartProtLabel.push(nowDate.format('YYYY-MM-DD HH:mm'));
+                        chartProtData.push(Number(water_temperature));
+                    });
+
+                    poromises.push(promise);
+
+                    // 次の時間に進める
+                    fetchDate.add(1, 'hour');
+                }
+                
+                Promise.all(poromises).then(() => {
+                    this.chartData = {
+                        labels: chartProtLabel,
+                        datasets: [{
+                            label: 'water templature',
+                            backgroundColor: 'rgb(255, 99, 132)',
+                            borderColor: 'rgb(255, 99, 132)',
+                            data: chartProtData,
+                        }]
+                    };
+                });
+            },
+        },
     });
 });
