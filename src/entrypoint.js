@@ -39,8 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // const fetchDate = moment().startOf('date');
     // const formatForDetectChange = momentObject => momentObject.format('YYYY-MM-DD');
-    const fetchDate = moment().startOf('month');
-    const formatForDetectChange = momentObject => momentObject.format('YYYY-MM');
+    // const fetchDate = moment().startOf('month');
+    const fetchDate = moment().startOf('week');
+    const formatForDetectChange = momentObject => momentObject.format('YYYY-ww');
     
     const loadData = (originFetchDate) => {
         const fetchDate = originFetchDate.clone();

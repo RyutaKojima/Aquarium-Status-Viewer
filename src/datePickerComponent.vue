@@ -26,11 +26,13 @@
 		methods: {
 			previous: function() {
 				// this.fetchDate.subtract(1, 'month');
-				this.newFetchDate = moment(this.fetchDate).subtract(1, 'month').format();
+				// this.newFetchDate = moment(this.fetchDate).subtract(1, 'month').format();
+				this.newFetchDate = moment(this.fetchDate).subtract(1, 'week').format();
 			},
 			next: function() {
 				// this.fetchDate.add(1, 'month');
-				this.newFetchDate = moment(this.fetchDate).add(1, 'month').format();
+				// this.newFetchDate = moment(this.fetchDate).add(1, 'month').format();
+				this.newFetchDate = moment(this.fetchDate).add(1, 'week').format();
 			},
 		},
 	};
