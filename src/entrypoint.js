@@ -52,6 +52,17 @@ document.addEventListener('DOMContentLoaded', () => {
             chartData : {},
             chartOptions: {
                 responsive: true,
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true,
+                                min: 0,
+                                max: 40,
+                            }
+                        }
+                    ]
+                }
             },
         },
         components: {
