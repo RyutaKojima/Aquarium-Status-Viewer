@@ -15,7 +15,7 @@
 			this.renderChart(this.chartData, this.options);
 		},
 		watch : {
-			chartData: function (){
+			chartData(){
 				this.renderChart(this.chartData, this.options);
 			},
 		},

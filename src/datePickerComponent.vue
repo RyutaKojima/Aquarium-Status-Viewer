@@ -10,13 +10,16 @@
 
 	export default {
 		name: 'datePickerComponent',
-		props: ['fetchDate'],
+		props: {
+			fetchDate: {
+				type: Object,
+				default: null,
+			}
+		},
 		computed: {
 			newFetchDate: {
 				set(value){
-					if (value === this.fetchDate) return;
-					this.$emit('set-fetch-date', value);
-					// this.$emit('update:fetchDate', value);
+					this.$emit('update:fetchDate', value);
 				},
 				get() {
 					return this.fetchDate;
@@ -24,15 +27,11 @@
 			},
 		},
 		methods: {
-			previous: function() {
-				// this.fetchDate.subtract(1, 'month');
-				// this.newFetchDate = moment(this.fetchDate).subtract(1, 'month').format();
-				this.newFetchDate = moment(this.fetchDate).subtract(1, 'week').format();
+			previous() {
+				this.newFetchDate = this.fetchDate.subtract(1, 'week');
 			},
-			next: function() {
-				// this.fetchDate.add(1, 'month');
-				// this.newFetchDate = moment(this.fetchDate).add(1, 'month').format();
-				this.newFetchDate = moment(this.fetchDate).add(1, 'week').format();
+			next() {
+				this.newFetchDate = this.fetchDate.add(1, 'week');
 			},
 		},
 	};

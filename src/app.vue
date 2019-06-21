@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<date-picker-component :fetch-date.sync="fetchDate" v-on:set-fetch-date="setFetchDate"></date-picker-component>
+		<date-picker-component :fetch-date.sync="nowDate"></date-picker-component>
 
 		<data-chart :chart-data="chartData" :options="chartOptions"></data-chart>
 
@@ -30,7 +30,7 @@
 		data() {
 			return {
 				loadedRecords: [],
-				fetchDate: moment().startOf('week').format(),
+				fetchDate: null,
 				chartData : {},
 				chartOptions: {
 					responsive: true,
@@ -49,20 +49,27 @@
 				},
 			}
 		},
+		created() {
+			this.nowDate = moment().startOf('week');
+		},
 		components: {
 			datePickerComponent,
 			dataChart,
 		},
-		created() {
-			this.refreshData(moment(this.fetchDate));
+		computed: {
+			nowDate: {
+				get() {
+					return this.fetchDate;
+				},
+				set(value) {
+					this.fetchDate = value;
+					this.refreshData(this.fetchDate);
+				}
+			},
 		},
 		methods: {
 			formatForDetectChange(momentObject) {
 				return momentObject.format('YYYY-ww');
-			},
-			setFetchDate(value) {
-				this.fetchDate = value;
-				this.refreshData(moment(this.fetchDate));
 			},
 			async refreshData(targetDate) {
 				this.loadedRecords = await this.loadFireStore(moment(targetDate));
