@@ -1,28 +1,14 @@
 <template>
 	<div>
 		<date-picker-component :fetch-date.sync="nowDate"></date-picker-component>
-
 		<data-chart :chart-data="chartData" :options="chartOptions"></data-chart>
-
-		<table>
-			<thead>
-			<th>日にち</th>
-			<th>水温</th>
-			<th>気温</th>
-			<th>湿度</th>
-			</thead>
-			<tbody v-for="parameter of loadedRecords">
-			<td>{{parameter.date}}</td>
-			<td>{{parameter.water}}</td>
-			<td>{{parameter.temperature}}</td>
-			<td>{{parameter.humidity}}</td>
-			</tbody>
-		</table>
+		<data-table :loaded-records="loadedRecords"></data-table>
 	</div>
 </template>
 <script>
 	import moment from 'moment';
 
+	import dataTable from './dataTable'
 	import datePickerComponent from './datePickerComponent'
 	import dataChart from './dataChart'
 
@@ -53,6 +39,7 @@
 			this.nowDate = moment().startOf('week');
 		},
 		components: {
+			dataTable,
 			datePickerComponent,
 			dataChart,
 		},
