@@ -21,17 +21,30 @@
 				chartOptions: {
 					responsive: true,
 					maintainAspectRatio: false,
+					/*
 					scales: {
 						yAxes: [
 							{
+								id: 'y-axis-temperature',
+								position: 'left',
 								ticks: {
 									beginAtZero: true,
-									min: 0,
+									min: 10,
 									max: 40,
 								}
-							}
+							},
+							{
+								id: 'y-axis-percent',
+								position: 'right',
+								ticks: {
+									beginAtZero: true,
+									min: 20,
+									max: 80,
+								}
+							},
 						]
 					}
+					*/
 				},
 			}
 		},
@@ -62,20 +75,41 @@
 				this.loadedRecords = await this.loadFireStore(moment(targetDate));
 
 				const chartLabel = [];
-				const chartData = [];
+				const chartWaterTemp = [];
+				const chartTemp = [];
+				const chartHumidity = [];
 				this.loadedRecords.forEach(param => {
 					chartLabel.push(param.date);
-					chartData.push(Number(param.water));
+					chartWaterTemp.push(Number(param.water));
+					chartTemp.push(Number(param.temperature));
+					chartHumidity.push(Number(param.humidity));
 				});
 
 				this.chartData = {
 					labels: chartLabel,
-					datasets: [{
-						label: 'water templature',
-						// backgroundColor: 'rgb(255, 99, 132)',
-						borderColor: 'rgb(255, 99, 132)',
-						data: chartData,
-					}]
+					datasets: [
+						{
+							label: '水温(℃)',
+							// backgroundColor: 'rgb(255, 99, 132)',
+							borderColor: 'rgb(138,78,255)',
+							// yAxisID: 'y-axis-temperature',
+							data: chartWaterTemp,
+						},
+						{
+							label: '気温(℃)',
+							// backgroundColor: 'rgb(255, 99, 132)',
+							borderColor: 'rgb(255,152,17)',
+							// yAxisID: 'y-axis-temperature',
+							data: chartTemp,
+						},
+						{
+							label: '湿度(%)',
+							// backgroundColor: 'rgb(255, 99, 132)',
+							borderColor: 'rgb(36,255,161)',
+							// yAxisID: 'y-axis-percent',
+							data: chartHumidity,
+						},
+					]
 				};
 			},
 			async loadFireStore(originFetchDate) {
@@ -90,13 +124,14 @@
 						const targetDate = moment(doc.id);
 						const fields = doc.exists ? doc.data() : {};
 						const water_temperature = fields.hasOwnProperty('water_temperature') ? fields.water_temperature : 0;
-						const temperature = fields.hasOwnProperty('temperature') ? fields.temperature : 0;
+						const temperature = fields.hasOwnProperty('temperature') ? parseFloat(fields.temperature) : 0;
+						const humidity = fields.hasOwnProperty('humidity') ? parseFloat(fields.humidity) : 0;
 
 						loadedRecords.push({
 							date: targetDate.format('YYYY-MM-DD HH:mm'),
 							water: water_temperature,
 							temperature: temperature,
-							humidity: 0,
+							humidity: humidity,
 						});
 					});
 
