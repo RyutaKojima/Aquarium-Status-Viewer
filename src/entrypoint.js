@@ -1,4 +1,6 @@
+import '@mdi/font/css/materialdesignicons.css'
 import Vue from 'vue'
+import vuetify from './plugins/vuetify'
 import appComponent from './app'
 
 Vue.config.devtools = true;
@@ -14,9 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
     //
     // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
     const app = new Vue({
-        el: '#app',
+        vuetify,
+        icons: {
+            iconfont: 'mdi', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4'
+        },
         components: {
             appComponent,
         },
-    });
+    }).$mount('#app');
 });

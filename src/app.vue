@@ -1,6 +1,8 @@
 <template>
-	<dashboard v-if="isLogIn"></dashboard>
-	<loginForm v-else :is-log-in.sync="isLogIn"></loginForm>
+	<v-app id="inspire">
+		<dashboard v-if="isLogIn"></dashboard>
+		<loginForm v-else :is-log-in.sync="isLogIn"></loginForm>
+	</v-app>
 </template>
 <script>
 	import dashboard from './dashboard'
