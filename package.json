@@ -17,30 +17,30 @@
   },
   "homepage": "https://github.com/RyutaKojima/Aquarium-Status-Viewer#readme",
   "dependencies": {
-    "@babel/polyfill": "^7.7.0",
+    "@babel/polyfill": "^7.10.4",
     "chart.js": "^2.9.3",
     "firebase": "^6.6.2",
-    "moment": "^2.24.0",
+    "moment": "^2.27.0",
     "vue": "^2.6.11",
     "vue-chartjs": "^3.5.0",
-    "vuetify": "^2.2.0",
-    "vuetify-loader": "^1.4.3"
+    "vuetify": "^2.3.8",
+    "vuetify-loader": "^1.6.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.7",
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
-    "@mdi/font": "^4.7.95",
-    "css-loader": "^3.4.0",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/preset-env": "^7.11.0",
+    "@mdi/font": "^4.9.95",
+    "css-loader": "^3.6.0",
     "deepmerge": "^4.2.2",
-    "fibers": "^4.0.2",
-    "file-loader": "^5.0.2",
-    "sass": "^1.24.0",
-    "sass-loader": "^8.0.0",
-    "style-loader": "^1.1.2",
-    "vue-loader": "^15.8.3",
+    "fibers": "^4.0.3",
+    "file-loader": "^5.1.0",
+    "sass": "^1.26.10",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.1",
+    "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.11",
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10"
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   }
 }

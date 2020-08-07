@@ -6,5 +6,6 @@ node_modules/
 # distribution directory
 public/js/
 public/css/
+public/assets/
 
 firebase-debug.log

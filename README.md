@@ -16,7 +16,7 @@ $ firebase login
 
 ```
 # Build
-webpack
+$ ./node_modules/.bin/webpack
 
 
 # ローカル ウェブサーバー起動（for ローカルテスト）
