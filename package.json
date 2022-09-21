@@ -23,7 +23,7 @@
     "moment": "^2.27.0",
     "vue": "^2.6.11",
     "vue-chartjs": "^3.5.0",
-    "vuetify": "^2.3.8",
+    "vuetify": "^2.6.10",
     "vuetify-loader": "^1.6.0"
   },
   "devDependencies": {
